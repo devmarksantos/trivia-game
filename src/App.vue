@@ -94,7 +94,6 @@ const fetchQuestions = async () => {
   try {
     const res = await axios.get(`https://opentdb.com/api.php?amount=${total.value}&type=multiple`)
     questions.value = res.data.results;
-    console.log(res.data.results);
   } catch (error) {
     console.error(error)
   } finally {
