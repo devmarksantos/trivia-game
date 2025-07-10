@@ -149,7 +149,7 @@ onMounted(fetchQuestions)
 
 <style scoped>
 .container-1 {
-  background-image: url('7290753.jpg');
+  background-image: url('/7290753.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
