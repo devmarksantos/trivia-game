@@ -1,22 +1,31 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-    <h1 class="text-3xl font-semibold pb-5">🧠Trivia Quiz Game</h1>
+  <div class="container-1 flex flex-col items-center justify-center min-h-screen bg-gray-100 px-y-5">
+    <h1 class="text-3xl font-semibold pb-5 text-gray-50 text-shadow-amber-50">🧠Trivia Quiz Game</h1>
 
-    <div v-if="loading">
-      <p class="text-gray-500">Loading question...</p>
+
+    <div v-if="loading" class="flex items-center justify-center ">
+      <div
+        class="px-3 py-1 text-base font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+        loading question please wait...</div>
     </div>
 
-    <div v-else-if="currentQuestion" class="mt-5">
-      <p class=" text-5xl font-bold pb-5" v-html="decode(currentQuestion.question)"></p>
+    <div v-else-if="currentQuestion" class="mt-5 px-5 py-5">
+      <div class=" pb-5 px-5 py-5 bg-white shadow-lg rounded-lg w-full max-w-2xl">
+        <div class="flex justify-between items-center mb-4 text-sm">
+          <p class="text-gray-500 font-semibold mb-4">{{ currentIndex + 1 }} of {{ total }}</p>
+          <p class="text-gray-500 mb-4">{{ currentQuestion.category }}</p>
+        </div>
+        <p class="text-3xl text-gray-900 font-bold" v-html="decode(currentQuestion.question)"></p>
+      </div>
 
-      <div class="grid gap-2 mb-5">
+      <div class="grid gap-2 pt-5">
         <button v-for="choice in shuffledChoices" :key="choice" @click="handleAnswer(choice)" :disabled="showAnswer"
           :class="[
-            'px-4 py-2 rounded-md border text-left transition',
+            'text-white font-semibold bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2',
             showAnswer
               ? choice === currentQuestion.correct_answer
-                ? 'bg-green-500 text-white border-green-500'
-                : 'bg-red-500 text-white border-red-500'
+                ? 'text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
+                : 'text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
               : 'bg-white hover:bg-gray-100 border-gray-300'
           ]" v-html="decode(choice)" />
       </div>
@@ -24,27 +33,24 @@
       <div v-if="showAnswer" class="mt-5 mb-4 items-center pt-5">
 
         <div v-if="isCorrect" class="bg-green-200 px-6 py-4 my-4 rounded-md text-lg flex items-center mx-auto mt-5">
-          <svg viewBox="0 0 24 24" class="text-green-600 w-5 h-5 sm:w-5 sm:h-5 mr-3">
-            <path fill="currentColor"
-              d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
-            </path>
-          </svg>
-          <span class="text-green-800">Your answer is CORRECT.</span>
+          <span class="text-green-800 ml-5">Your answer is CORRECT.</span>
         </div>
 
         <div v-else class="bg-red-200 px-6 py-4 my-4 rounded-md text-lg flex items-center mx-auto mt-5">
-          <svg viewBox="0 0 24 24" class="text-red-600 w-5 h-5 sm:w-5 sm:h-5 mr-3">
-            <path fill="currentColor"
-              d="M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z">
-            </path>
-          </svg>
-          <span class="text-red-800"> Wrong answer! Correct answer is : <span
+          <span class="text-red-800 ml-5"> Wrong answer! Correct answer is : <span
               v-html="decode(currentQuestion.correct_answer)"></span> </span>
         </div>
- 
+
         <div class="flex justify-center space-x-4 pt-5">
-          <button @click="nextQuestion" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          <button @click="nextQuestion"
+            class="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
             Next Question
+            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 12H5m14 0-4 4m4-4-4-4" />
+            </svg>
+
           </button>
         </div>
 
@@ -52,13 +58,16 @@
     </div>
 
     <div v-if="gameOver" class="mt-5 text-center">
-      <h2 class="text-4xl font-bold mb-2">Game Over!</h2>
-      <p class="text-4xl mb-4 font-extrabold">Your Score: {{ score }}/{{ total }}</p>
+      <div class="px-5 py-5 shadow-lg rounded-lg w-full max-w-2xl">
+        <h2 class="text-2xl font-bold mb-2 text-gray-50 uppercase">Game Over!</h2>
+        <p class="text-5xl mb-4 font-extrabold text-gray-50">Your Score: {{ score }}/{{ total }}</p>
 
-      <div class="flex justify-center space-x-4 pt-5">
-        <button @click="restartGame" class=" px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-          Play Again
-        </button>
+        <div class="flex justify-center space-x-4 pt-5">
+          <button @click="restartGame"
+            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+            Play Again
+          </button>
+        </div>
       </div>
 
     </div>
@@ -84,7 +93,8 @@ const fetchQuestions = async () => {
   loading.value = true
   try {
     const res = await axios.get(`https://opentdb.com/api.php?amount=${total.value}&type=multiple`)
-    questions.value = res.data.results
+    questions.value = res.data.results;
+    console.log(res.data.results);
   } catch (error) {
     console.error(error)
   } finally {
@@ -134,11 +144,15 @@ const shuffledChoices = computed(() => {
 })
 
 onMounted(fetchQuestions)
-
-const getChoiceClass = (choice) => {
-  if (!showAnswer.value) return ''
-  if (choice === currentQuestion.value.correct_answer) return 'correct'
-  if (choice !== currentQuestion.value.correct_answer && choice === currentQuestion.value.userAnswer) return 'wrong'
-  return ''
-}
+ 
 </script>
+
+<style scoped>
+.container-1 {
+  background-image: url('7290753.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+</style>

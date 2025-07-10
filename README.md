@@ -1,29 +1,24 @@
-# trivia-game
+ # 🧠 Trivia Game
 
-This template should help get you started developing with Vue 3 in Vite.
+A fun and interactive trivia quiz game built with **Vue.js** and **Tailwind CSS**, powered by the [Open Trivia DB API](https://opentdb.com/). Test your general knowledge across a variety of categories!
 
-## Recommended IDE Setup
+## 🚀 Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Randomized trivia questions from Open Trivia DB
+- Multiple categories and difficulty levels 
+- Clean and responsive UI with Tailwind CSS 
 
-## Customize configuration
+## 🖥️ Demo
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+[Live Demo](https://devmarksantos-trivia-game.vercel.app/)  
 
-## Project Setup
+## 📸 Screenshots
 
-```sh
-npm install
-```
+![Trivia Game Screenshot](./screenshot.png)  
+*Trivia Game — Vue + Tailwind UI*
 
-### Compile and Hot-Reload for Development
+## 🛠️ Technologies Used
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+- [Vue.js 3](https://vuejs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Open Trivia DB API](https://opentdb.com/) 
